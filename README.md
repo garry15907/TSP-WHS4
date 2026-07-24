@@ -2,7 +2,7 @@
 
 -[WHS4기] 3반 서승린
 
-시큐어 코딩 과제를 위한 소형 중고거래 플랫폼입니다. 회원가입, 로그인, 상품 등록/조회/검색, 전역 채팅, 1:1 채팅, 사용자 간 송금, 신고/자동 차단, 관리자 대시보드를 포함합니다.
+시큐어 코딩 과제를 위한 소형 중고거래 플랫폼을 구현했습니다. 회원가입, 로그인, 상품 등록/조회/검색, 전역 채팅, 1:1 채팅, 사용자 간 송금, 신고/자동 차단, 관리자 대시보드를 포함했습니다.
 
 ## 기술 스택
 
@@ -26,55 +26,33 @@
 
 ## 실행 방법
 
-1. `.env.example`을 참고해 `.env`를 생성합니다.
-2. 의존성을 설치합니다.
+1. `.env.example`을 참고해 `.env`를 생성했습니다.
+2. 의존성을 설치했습니다.
 
 ```bash
 npm install
 ```
 
-3. 개발 서버를 실행합니다.
+3. 개발 서버를 실행했습니다.
 
 ```bash
 npm start
 ```
 
-4. 브라우저에서 `http://localhost:3000`으로 접속합니다.
+4. 브라우저에서 `http://localhost:3000`으로 접속했습니다.
 
 ## 기본 관리자 계정
 
 - 아이디: `.env`의 `ADMIN_USERNAME`
 - 비밀번호: `.env`의 `ADMIN_PASSWORD`
 
-처음 실행 시 계정이 자동 생성됩니다.
+처음 실행 시 계정을 자동 생성하도록 구성했습니다.
 
 ## 테스트
 
 ```bash
 npm test
 ```
-
-## 보고서 생성
-
-```bash
-npm run report:build
-```
-
-생성 파일:
-
-- `docs/artifacts/tiny-secondhand-platform-report.docx`
-- `docs/artifacts/tiny-secondhand-platform-report.pdf`
-
-한컴오피스가 설치된 Windows 환경에서는 HWP도 생성할 수 있습니다.
-
-```powershell
-npm run report:build:hwp
-```
-
-생성 파일:
-
-- `docs/artifacts/tiny-secondhand-platform-report.hwp`
-- `docs/artifacts/[WHS][secure-coding][03반]서승린(9585).hwp`
 
 ## 폴더 구조
 
