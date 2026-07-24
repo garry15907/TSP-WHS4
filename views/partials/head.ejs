@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= pageTitle %> | <%= appName %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1><a href="<%= currentUser ? '/market' : '/login' %>"><%= appName %></a></h1>
+          <p>보안 과제용 중고거래 플랫폼</p>
+        </div>
+        <nav class="nav">
+          <% if (currentUser) { %>
+            <span class="meta"><strong><%= currentUser.display_name %></strong> · <%= currentUser.username %> · 잔액 <%= formatCurrency(currentUser.wallet_balance) %>원</span>
+            <a href="/market">마켓</a>
+            <a href="/products/new">상품 등록</a>
+            <a href="/my/products">내 상품</a>
+            <a href="/profile">마이페이지</a>
+            <% if (currentUser.isAdmin) { %>
+              <a href="/admin">관리자</a>
+            <% } %>
+            <form method="post" action="/logout" class="inline-form">
+              <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+              <button type="submit">로그아웃</button>
+            </form>
+          <% } else { %>
+            <a href="/login">로그인</a>
+            <a class="button-primary" href="/register">회원가입</a>
+          <% } %>
+        </nav>
+      </header>
+
+      <% if (flash) { %>
+        <div class="flash <%= flash.type %>"><%= flash.message %></div>
+      <% } %>

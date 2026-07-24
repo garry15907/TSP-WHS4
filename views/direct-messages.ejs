@@ -1,0 +1,29 @@
+<%- include("partials/head") %>
+<section class="card stack" data-direct-chat data-current-user-id="<%= currentUser.id %>" data-partner-id="<%= otherUser.id %>">
+  <div class="hero">
+    <div>
+      <h2 class="section-title"><%= otherUser.display_name %>님과의 1:1 대화</h2>
+      <p class="hint">@<%= otherUser.username %> · 실시간 direct message</p>
+    </div>
+    <a class="button button-secondary" href="/market">마켓으로 돌아가기</a>
+  </div>
+  <div class="message-log">
+    <% for (const message of messages) { %>
+      <article class="chat-message <%= message.sender_id === currentUser.id ? 'me' : '' %>">
+        <header>
+          <strong><%= message.sender_display_name %></strong>
+          <small><%= formatDate(message.created_at) %></small>
+        </header>
+        <div><%= message.content %></div>
+      </article>
+    <% } %>
+  </div>
+  <form class="form-grid">
+    <label>
+      새 메시지
+      <textarea name="content" maxlength="300" required></textarea>
+    </label>
+    <button class="button button-primary" type="submit">전송</button>
+  </form>
+</section>
+<%- include("partials/foot") %>

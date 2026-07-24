@@ -1,0 +1,126 @@
+<%- include("partials/head") %>
+<section class="card stack">
+  <div class="hero">
+    <div>
+      <h2 class="section-title">중고거래 마켓</h2>
+      <p class="hint">상품 검색, 전역 채팅, 1:1 대화, 송금을 한 화면에서 다룹니다.</p>
+    </div>
+    <form method="get" action="/market" class="inline-form">
+      <label>
+        <span class="muted">상품 검색</span>
+        <input name="q" value="<%= search %>" maxlength="60" placeholder="상품명 또는 설명 검색" />
+      </label>
+      <button class="button button-primary" type="submit">검색</button>
+    </form>
+  </div>
+</section>
+
+<div class="grid market">
+  <section class="card stack">
+    <div class="compact">
+      <h3 class="section-title">등록된 상품</h3>
+      <span class="pill ok"><%= products.length %>개</span>
+    </div>
+    <div class="product-grid">
+      <% for (const product of products) { %>
+        <article class="product-card">
+          <img src="<%= product.image_url %>" alt="<%= product.title %>" />
+          <div class="body stack">
+            <div>
+              <strong><a href="/products/<%= product.id %>"><%= product.title %></a></strong>
+              <p class="muted"><%= product.seller_display_name %> · <%= formatCurrency(product.price) %>원</p>
+            </div>
+            <div class="pill-row">
+              <span class="pill"><%= product.status %></span>
+              <span class="pill warn">신고 <%= product.report_count %>회</span>
+            </div>
+          </div>
+        </article>
+      <% } %>
+    </div>
+  </section>
+
+  <div class="stack">
+    <section class="card stack" data-global-chat data-current-user-id="<%= currentUser.id %>">
+      <div class="compact">
+        <h3 class="section-title">전체 채팅</h3>
+        <span class="pill ok">실시간</span>
+      </div>
+      <div class="chat-log">
+        <% for (const message of globalMessages) { %>
+          <article class="chat-message <%= message.user_id === currentUser.id ? 'me' : '' %>">
+            <header>
+              <strong><%= message.display_name %></strong>
+              <small><%= formatDate(message.created_at) %></small>
+            </header>
+            <div><%= message.content %></div>
+          </article>
+        <% } %>
+      </div>
+      <form class="form-grid">
+        <label>
+          새 메시지
+          <textarea name="content" maxlength="300" required></textarea>
+        </label>
+        <button class="button button-primary" type="submit">전송</button>
+      </form>
+    </section>
+
+    <section class="card stack">
+      <div class="compact">
+        <h3 class="section-title">사용자 목록</h3>
+        <span class="pill">1:1 채팅 / 송금 / 신고</span>
+      </div>
+      <% for (const user of users) { %>
+        <article class="product-card">
+          <div class="body stack">
+            <div>
+              <strong><%= user.display_name %></strong>
+              <p class="muted">@<%= user.username %></p>
+            </div>
+            <div class="toolbar">
+              <a class="button button-secondary" href="/users/<%= user.id %>/messages">1:1 대화</a>
+              <form method="post" action="/transfers" class="inline-form">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+                <input type="hidden" name="recipientId" value="<%= user.id %>" />
+                <input type="hidden" name="productId" value="" />
+                <input name="amount" type="number" min="100" step="100" placeholder="금액" required />
+                <input name="note" maxlength="140" placeholder="메모" required />
+                <button class="button" type="submit">송금</button>
+              </form>
+            </div>
+            <form method="post" action="/users/<%= user.id %>/report" class="form-grid">
+              <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+              <label>
+                사용자 신고
+                <textarea name="reason" maxlength="500" required placeholder="신고 사유를 구체적으로 작성하세요."></textarea>
+              </label>
+              <button class="button" type="submit">신고하기</button>
+            </form>
+          </div>
+        </article>
+      <% } %>
+    </section>
+
+    <section class="card stack">
+      <div class="compact">
+        <h3 class="section-title">최근 송금 내역</h3>
+        <span class="pill"><%= transfers.length %>건</span>
+      </div>
+      <% for (const transfer of transfers) { %>
+        <article class="chat-message">
+          <header>
+            <strong>
+              <%= transfer.sender_id === currentUser.id ? '보냄' : '받음' %>
+              ·
+              <%= transfer.sender_id === currentUser.id ? transfer.recipient_display_name : transfer.sender_display_name %>
+            </strong>
+            <small><%= formatDate(transfer.created_at) %></small>
+          </header>
+          <div><%= formatCurrency(transfer.amount) %>원 · <%= transfer.note %></div>
+        </article>
+      <% } %>
+    </section>
+  </div>
+</div>
+<%- include("partials/foot") %>

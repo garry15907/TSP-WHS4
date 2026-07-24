@@ -1,0 +1,28 @@
+<%- include("partials/head") %>
+<section class="card stack" style="max-width: 760px; margin: 0 auto;">
+  <div>
+    <h2 class="section-title">새 상품 등록</h2>
+    <p class="hint">파일 업로드 취약점을 피하기 위해 초기 버전은 검증된 이미지 URL만 허용합니다.</p>
+  </div>
+  <form method="post" action="/products" class="form-grid">
+    <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+    <label>
+      상품명
+      <input name="title" maxlength="80" required />
+    </label>
+    <label>
+      가격
+      <input name="price" type="number" min="100" step="100" required />
+    </label>
+    <label>
+      이미지 URL
+      <input name="imageUrl" type="url" maxlength="2048" required />
+    </label>
+    <label>
+      상품 설명
+      <textarea name="description" maxlength="1200" required></textarea>
+    </label>
+    <button class="button button-primary" type="submit">등록하기</button>
+  </form>
+</section>
+<%- include("partials/foot") %>

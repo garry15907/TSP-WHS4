@@ -1,0 +1,9 @@
+<%- include("partials/head") %>
+<section class="card stack" style="max-width: 720px; margin: 0 auto;">
+  <h2 class="section-title"><%= pageTitle %></h2>
+  <p><%= message %></p>
+  <div class="toolbar">
+    <a class="button button-secondary" href="<%= currentUser ? '/market' : '/login' %>">돌아가기</a>
+  </div>
+</section>
+<%- include("partials/foot") %>

@@ -1,0 +1,24 @@
+<%- include("partials/head") %>
+<section class="card stack" style="max-width: 620px; margin: 0 auto;">
+  <div>
+    <h2 class="section-title">회원가입</h2>
+    <p class="hint">아이디 중복 방지와 강한 비밀번호 정책이 적용됩니다.</p>
+  </div>
+  <form method="post" action="/register" class="form-grid">
+    <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+    <label>
+      아이디
+      <input name="username" minlength="4" maxlength="24" required />
+    </label>
+    <label>
+      표시 이름
+      <input name="displayName" minlength="2" maxlength="30" required />
+    </label>
+    <label>
+      비밀번호
+      <input name="password" type="password" minlength="10" maxlength="72" required />
+    </label>
+    <button class="button button-primary" type="submit">가입하기</button>
+  </form>
+</section>
+<%- include("partials/foot") %>

@@ -1,0 +1,63 @@
+<%- include("partials/head") %>
+<section class="card stack">
+  <div class="columns two">
+    <article class="product-hero product-card">
+      <img src="<%= product.image_url %>" alt="<%= product.title %>" />
+      <div class="body stack">
+        <div>
+          <h2 class="section-title"><%= product.title %></h2>
+          <p><%= product.description %></p>
+        </div>
+        <div class="pill-row">
+          <span class="pill ok"><%= formatCurrency(product.price) %>원</span>
+          <span class="pill"><%= product.status %></span>
+          <span class="pill warn">신고 <%= product.report_count %>회</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="stack">
+      <section class="card stack">
+        <div>
+          <h3 class="section-title">판매자 정보</h3>
+          <p><strong><%= seller.display_name %></strong> (@<%= seller.username %>)</p>
+          <p class="muted"><%= seller.bio || '소개글이 없습니다.' %></p>
+        </div>
+        <% if (seller.id !== currentUser.id) { %>
+          <div class="toolbar">
+            <a class="button button-secondary" href="/users/<%= seller.id %>/messages">1:1 채팅</a>
+          </div>
+          <form method="post" action="/transfers" class="form-grid">
+            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+            <input type="hidden" name="recipientId" value="<%= seller.id %>" />
+            <input type="hidden" name="productId" value="<%= product.id %>" />
+            <label>
+              송금 금액
+              <input name="amount" type="number" min="100" step="100" value="<%= product.price %>" required />
+            </label>
+            <label>
+              송금 메모
+              <input name="note" maxlength="140" value="<%= product.title %> 거래금" required />
+            </label>
+            <button class="button button-primary" type="submit">판매자에게 송금</button>
+          </form>
+        <% } %>
+      </section>
+
+      <% if (seller.id !== currentUser.id) { %>
+        <section class="card stack">
+          <h3 class="section-title">상품 신고</h3>
+          <form method="post" action="/products/<%= product.id %>/report" class="form-grid">
+            <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+            <label>
+              신고 사유
+              <textarea name="reason" maxlength="500" required></textarea>
+            </label>
+            <button class="button" type="submit">상품 신고</button>
+          </form>
+        </section>
+      <% } %>
+    </div>
+  </div>
+</section>
+<%- include("partials/foot") %>

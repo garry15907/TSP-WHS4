@@ -1,0 +1,45 @@
+<%- include("partials/head") %>
+<section class="card stack">
+  <div class="hero">
+    <div>
+      <h2 class="section-title">내 상품 관리</h2>
+      <p class="hint">등록 상품을 판매완료, 삭제, 재활성화 상태로 변경할 수 있습니다.</p>
+    </div>
+    <a class="button button-primary" href="/products/new">새 상품 등록</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>상품</th>
+          <th>가격</th>
+          <th>상태</th>
+          <th>신고 수</th>
+          <th>관리</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const product of products) { %>
+          <tr>
+            <td><a href="/products/<%= product.id %>"><%= product.title %></a></td>
+            <td><%= formatCurrency(product.price) %>원</td>
+            <td><%= product.status %></td>
+            <td><%= product.report_count %></td>
+            <td>
+              <form method="post" action="/my/products/<%= product.id %>/status" class="compact">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+                <select name="status">
+                  <option value="active">active</option>
+                  <option value="sold">sold</option>
+                  <option value="deleted">deleted</option>
+                </select>
+                <button class="button" type="submit">변경</button>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include("partials/foot") %>

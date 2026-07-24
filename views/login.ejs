@@ -1,0 +1,21 @@
+<%- include("partials/head") %>
+<section class="card stack" style="max-width: 520px; margin: 0 auto;">
+  <div>
+    <h2 class="section-title">로그인</h2>
+    <p class="hint">세션 보호, rate limit, 비밀번호 해시를 적용한 로그인 페이지입니다.</p>
+  </div>
+  <form method="post" action="/login" class="form-grid">
+    <input type="hidden" name="csrfToken" value="<%= csrfToken %>" />
+    <label>
+      아이디
+      <input name="username" autocomplete="username" required />
+    </label>
+    <label>
+      비밀번호
+      <input name="password" type="password" autocomplete="current-password" required />
+    </label>
+    <button class="button button-primary" type="submit">로그인</button>
+  </form>
+  <p class="hint">기본 관리자 계정은 README와 .env.example에 정의되어 있습니다.</p>
+</section>
+<%- include("partials/foot") %>
