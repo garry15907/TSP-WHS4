@@ -7,7 +7,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "node --test",
-    "report:build": "node scripts/generate-report.js"
+    "report:build": "node scripts/generate-report.js",
+    "report:build:hwp": "powershell -ExecutionPolicy Bypass -File .\\scripts\\generate-report-hwp.ps1"
   },
   "keywords": [
     "secure-coding",

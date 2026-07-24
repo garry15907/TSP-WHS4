@@ -63,6 +63,17 @@ npm run report:build
 - `docs/artifacts/tiny-secondhand-platform-report.docx`
 - `docs/artifacts/tiny-secondhand-platform-report.pdf`
 
+한컴오피스가 설치된 Windows 환경에서는 HWP도 생성할 수 있습니다.
+
+```powershell
+npm run report:build:hwp
+```
+
+생성 파일:
+
+- `docs/artifacts/tiny-secondhand-platform-report.hwp`
+- `docs/artifacts/[WHS][secure-coding][03반]서승린(9585).hwp`
+
 ## 폴더 구조
 
 ```text
